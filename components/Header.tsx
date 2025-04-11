@@ -16,8 +16,8 @@ const Header = ({ children, className }: HeaderProps) => {
         <Image 
           src="/assets/icons/logo-icon.svg"
           alt="Logo"
-          width={48}
-          height={48}
+          width={160}
+          height={160}
           className="mr-2 md:hidden"
         />
       </Link>
