@@ -1,4 +1,4 @@
-# Real-Time Collaborative Editor
+# Real-Time Collaborative Docs
 
 A modern, real-time collaborative document editor built with Next.js, Liveblocks, and Clerk authentication. This project allows multiple users to edit documents simultaneously with real-time updates.
 
