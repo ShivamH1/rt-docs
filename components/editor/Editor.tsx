@@ -59,6 +59,7 @@ export function Editor({
       <div className="editor-container size-full">
         <div className="toolbar-wrapper flex min-w-full justify-between">
           <ToolbarPlugin />
+          {/* Delete Modal for documents */}
           {currentUserType === "editor" && <DeleteModal roomId={roomId} />}
         </div>
 

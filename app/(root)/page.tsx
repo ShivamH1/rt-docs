@@ -61,6 +61,7 @@ const Home = async () => {
                     </p>
                   </div>
                 </Link>
+                {/* Delete Modal for documents */}
                 <DeleteModal roomId={id} />
               </li>
             ))}
