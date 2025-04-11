@@ -101,6 +101,7 @@ export const updateDocumentAccess = async ({
     });
 
     if (room) {
+      // Sending notification to the user about the document access
       const notificationId = nanoid();
 
       await liveblocks.triggerInboxNotification({
