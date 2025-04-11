@@ -272,3 +272,142 @@ The project successfully overcame these challenges through:
 - Security best practices
 
 This project serves as an excellent example of building a modern, real-time collaborative application with proper security, performance, and user experience considerations.
+
+# Room Management and Real-time Updates
+
+## Room Creation and Management
+
+### Creating a Room
+```typescript
+// Example of room creation
+const createRoom = async (userId: string, email: string) => {
+  const roomId = nanoid(); // Generate unique room ID
+  
+  const metadata = {
+    creatorId: userId,
+    email,
+    title: "Untitled Document",
+    createdAt: new Date().toISOString(),
+  };
+
+  const usersAccesses: Record<string, ["room:write"]> = {
+    [email]: ["room:write"],
+  };
+
+  const room = await liveblocks.createRoom(roomId, {
+    metadata,
+    usersAccesses,
+    defaultAccesses: [],
+  });
+};
+```
+
+### Room Management Best Practices
+- Always generate unique room IDs using `nanoid()`
+- Store room metadata as serializable data (strings, numbers, booleans)
+- Implement proper error handling for room creation
+- Clean up unused rooms to optimize resources
+- Track room creation time and last activity
+
+## Access Control Configuration
+
+### Types of Access Permissions
+- `["room:write"]` - Allows users to modify room content
+- `["room:read"]` - Allows users to view room content
+- `["room:presence:write"]` - Allows users to update their presence
+- `["room:metadata:write"]` - Allows users to modify room metadata
+
+### Implementing Access Control
+```typescript
+// Example of access control configuration
+const accessControl = {
+  // User-specific access
+  usersAccesses: {
+    "user1@example.com": ["room:write"],
+    "user2@example.com": ["room:read"],
+  },
+  
+  // Default access for all users
+  defaultAccesses: ["room:read"],
+  
+  // Group-based access
+  groupsAccesses: {
+    "editors": ["room:write"],
+    "viewers": ["room:read"],
+  }
+};
+```
+
+### Access Control Best Practices
+- Use granular permissions for better security
+- Implement role-based access control
+- Regularly review and update access permissions
+- Log access changes for audit purposes
+- Handle access revocation properly
+
+## Real-time Updates Handling
+
+### Presence Updates
+```typescript
+// Example of presence handling
+const { presence } = useMyPresence();
+
+// Update user presence
+presence.update({
+  cursor: { x: 100, y: 200 },
+  selection: null,
+  user: {
+    name: "John Doe",
+    color: "#ff0000"
+  }
+});
+```
+
+### Document Updates
+```typescript
+// Example of document updates
+const { room } = useRoom();
+
+// Subscribe to document changes
+room.subscribe("document", (document) => {
+  // Handle document updates
+  console.log("Document updated:", document);
+});
+
+// Update document
+room.updateDocument({
+  content: "New content",
+  lastModified: new Date().toISOString()
+});
+```
+
+### Real-time Update Best Practices
+- Implement proper error handling for updates
+- Use optimistic updates for better UX
+- Handle conflicts gracefully
+- Implement proper state synchronization
+- Monitor update performance
+- Use proper typing for all update operations
+
+## Key Implementation Considerations
+
+### Performance Optimization
+- Batch updates when possible
+- Implement proper debouncing for frequent updates
+- Use efficient data structures for updates
+- Monitor network usage
+- Implement proper caching strategies
+
+### Error Handling
+- Implement proper error boundaries
+- Handle network disconnections
+- Provide fallback mechanisms
+- Log errors for debugging
+- Implement retry mechanisms
+
+### Security Considerations
+- Validate all updates on the server
+- Implement proper access control
+- Sanitize user input
+- Monitor for suspicious activities
+- Implement rate limiting
